@@ -1,0 +1,17 @@
+os
+openai
+numpy
+pandas
+matplotlib
+seaborn
+plotly
+altair
+bokeh
+pillow
+opencv-python
+jupyter
+nltk
+sklearn
+PyMuPDF
+fitz
+pdfplumber
