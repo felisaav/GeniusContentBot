@@ -23,13 +23,16 @@ style=["Use a Conversational Tone: Engage your audience as if you're having a fr
 
 
 def main():
+	with st.sidebar.form(key ='Form1'):
+		st.title("Enter information")
+		input_1=st.text_input("what is the topic that you want to write?")
+		input_2=st.text_input("what is the field that you want to write?")
+		input_3=st.selectbox("Which language do you want to use?",["English","Spanish"])
+		input_4=st.number_input("Do you want to limit the size of the content? please provide a number of words",0,1000)
+		input_5=st.selectbox("what writing style do you want to use?",style)
+	
 	st.title("Project - Genius Content Assistant")
 	st.markdown("""---""")
-	input_1=st.text_input("what is the topic that you want to write?")
-	input_2=st.text_input("what is the field that you want to write?")
-	input_3=st.selectbox("Which language do you want to use?",["English","Spanish"])
-	input_4=st.number_input("Do you want to limit the size of the content? please provide a number of words",0,1000)
-	input_5=st.selectbox("what writing style do you want to use?",style)
 
 	with st.form(key='my_form'):
 		submit_code = st.form_submit_button(label ="Execute")
