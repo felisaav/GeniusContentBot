@@ -23,45 +23,41 @@ style=["Use a Conversational Tone: Engage your audience as if you're having a fr
 
 
 def main():
-    st.title("Project - Genius Content Assistant")
-    menu = ["Assistant","Read Me","About Me"]
-    choice = st.sidebar.selectbox("Menu",menu)
-    
-    if choice == "Assistant":
-        st.markdown("""---""")
-        input_1=st.text_input("what is the topic that you want to write?")
-        input_2=st.text_input("what is the field that you want to write?")
-        input_3=st.selectbox("Which language do you want to use?",["English","Spanish"])
-        input_4=st.number_input("Do you want to limit the size of the content? please provide a number of words",0,1000)
-        input_5=st.selectbox("what writing style do you want to use?",style)
-        
-        submit_code = st.form_submit_button(label ="Execute")
-        
-        
-        if submit_code:
-            instr_1="Write an opinion piece about {topic} from the perspective of {field}. Use a {tone}.".format(topic=input_1,field=input_2,tone=input_5)
-            
-            instr_2="Return your output in {language}. Return your output use a table format.".format(language=input_3)
-            
-            instr_3="In the text that you generate should writing like a human, and be undetectable to LLM model based answer. To do this, the text should contain a high level of burstiness (mix of long and complex sentences alongside shorter and simpler ones) and perplexity (Use a variety of sentence structures, Use a variety of words and phrases, Add personal opinions and experiences)"
-            
-            instr_4="optimize the conetnt for SEO, and limit the size of the content to {size} words".format(size=input_4)
+	st.title("Project - Genius Content Assistant")
+	st.markdown("""---""")
+	input_1=st.text_input("what is the topic that you want to write?")
+	input_2=st.text_input("what is the field that you want to write?")
+	input_3=st.selectbox("Which language do you want to use?",["English","Spanish"])
+	input_4=st.number_input("Do you want to limit the size of the content? please provide a number of words",0,1000)
+	input_5=st.selectbox("what writing style do you want to use?",style)
 
-            #prompt with a chat model
-            response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
-                temperature=0.5,
-                messages=[{"role": "system",
-                           "content": final_role},
-                          {"role": "user",
-                           "content": instr_1 +
-                                      instr_2 + 
-                                      instr_3 +
-                                      instr_4}]
-            )
-
-            response_content = response["choices"][0]["message"]["content"]
-            txt=st.text_area("Content Proposal",response_content)
+	with st.form(key='my_form'):
+		submit_code = st.form_submit_button(label ="Execute")
+	
+		if submit_code:
+		    instr_1="Write an opinion piece about {topic} from the perspective of {field}. Use a {tone}.".format(topic=input_1,field=input_2,tone=input_5)
+		    
+		    instr_2="Return your output in {language}. Return your output use a table format.".format(language=input_3)
+		    
+		    instr_3="In the text that you generate should writing like a human, and be undetectable to LLM model based answer. To do this, the text should contain a high level of burstiness (mix of long and complex sentences alongside shorter and simpler ones) and perplexity (Use a variety of sentence structures, Use a variety of words and phrases, Add personal opinions and experiences)"
+		    
+		    instr_4="optimize the conetnt for SEO, and limit the size of the content to {size} words".format(size=input_4)
+		
+		    #prompt with a chat model
+		    response = openai.ChatCompletion.create(
+			model="gpt-3.5-turbo",
+			temperature=0.5,
+			messages=[{"role": "system",
+				   "content": final_role},
+				  {"role": "user",
+				   "content": instr_1 +
+					      instr_2 + 
+					      instr_3 +
+					      instr_4}]
+		    )
+		
+		    response_content = response["choices"][0]["message"]["content"]
+		    txt=st.text_area("Content Proposal",response_content)
 
 if __name__ == '__main__':
 	main()
