@@ -30,12 +30,12 @@ def main():
 		input_3=st.selectbox("Which language do you want to use?",["English","Spanish"])
 		input_4=st.number_input("Do you want to limit the size of the content? please provide a number of words",0,1000)
 		input_5=st.selectbox("what writing style do you want to use?",style)
-	
+		submit_code = st.form_submit_button(label ="Execute")
 	st.title("Project - Genius Content Assistant")
 	st.markdown("""---""")
 
 	with st.form(key='my_form'):
-		submit_code = st.form_submit_button(label ="Execute")
+		#submit_code = st.form_submit_button(label ="Execute")
 	
 		if submit_code:
 		    instr_1="Write an opinion piece about {topic} from the perspective of {field}. Use a {tone}.".format(topic=input_1,field=input_2,tone=input_5)
