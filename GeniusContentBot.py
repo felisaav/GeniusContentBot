@@ -3,7 +3,7 @@ import openai
 import os
 
 # Load the key from a file
-api_key = open('OpenAI_Key.txt', 'r').read().strip('\n')
+api_key = st.secrets.key
 assert api_key.startswith('sk-'), 'Error loding the API key. OpenAI API Keys start with "sk-".'
 openai.api_key = api_key
 
