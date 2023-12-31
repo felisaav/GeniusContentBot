@@ -23,6 +23,7 @@ style=["Use a Conversational Tone: Engage your audience as if you're having a fr
 
 
 def main():
+	txt=''
 	with st.sidebar.form(key ='Form1'):
 		st.title("Enter information")
 		input_1=st.text_input("what is the topic that you want to write?")
