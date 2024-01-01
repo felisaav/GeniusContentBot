@@ -49,11 +49,12 @@ if prompt := st.chat_input("What content do you want to generate?"):
     st.session_state.messages.append({"role": "assistant", "content": full_response})
 
     # Add download button for the last response
-    if st.button("Download Last Response"):
-        response_file = open("genius_content_response.txt", "w")
-        response_file.write(full_response)
-        response_file.close()
-        st.markdown(
-            "[Download your response](sandbox:/genius_content_response.txt)",
-            unsafe_allow_html=True,
-        )
+    st.download_button('Download Last Response', full_response)
+    #if st.button("Download Last Response"):
+    #    response_file = open("genius_content_response.txt", "w")
+    #    response_file.write(full_response)
+    #    response_file.close()
+    #    st.markdown(
+    #        "[Download your response](sandbox:/genius_content_response.txt)",
+    #        unsafe_allow_html=True,
+    #    )
