@@ -1,8 +1,20 @@
 from openai import OpenAI
 import streamlit as st
 
+# Sidebar inputs
+input_3 = st.selectbox("Which language do you want to use?", ["English", "Spanish"])
+input_4 = st.number_input("Do you want to limit the size of the content? Please provide the number of words", 0, 1000)
+input_5 = st.selectbox("What writing style do you want to use?", style)
+
+# Display sidebar inputs
+st.sidebar.title("Chat Parameters")
+st.sidebar.write("Language:", input_3)
+st.sidebar.write("Word Limit:", input_4)
+st.sidebar.write("Writing Style:", input_5)
+
 st.title("ChatGPT-like clone")
 
+# Initialize OpenAI client
 client = OpenAI(api_key=st.secrets.key)
 
 if "openai_model" not in st.session_state:
@@ -10,9 +22,12 @@ if "openai_model" not in st.session_state:
 
 # Define the system role and content
 system_role = "assistant"
-system_content = '''I manage and curate content for a company's social media, aiming to build a strong online presence, 
+system_content = f'''I manage and curate content for a company's social media, aiming to build a strong online presence, 
 engage the audience, and establish the brand as an industry authority. The focus is on boosting visibility, addressing 
-audience needs, and driving engagement through diverse content.'''
+audience needs, and driving engagement through diverse content. 
+Language: {input_3}
+Word Limit: {input_4}
+Writing Style: {input_5}'''
 
 # Initialize messages with the system role and content
 if "messages" not in st.session_state:
@@ -23,10 +38,12 @@ for message in st.session_state.messages:
         st.markdown(message["content"])
 
 if prompt := st.chat_input("What content do you want to generate?"):
+    # Append user input to messages
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
         st.markdown(prompt)
 
+    # Generate assistant response
     with st.chat_message("assistant"):
         message_placeholder = st.empty()
         full_response = ""
@@ -41,8 +58,9 @@ if prompt := st.chat_input("What content do you want to generate?"):
             full_response += (response.choices[0].delta.content or "")
             message_placeholder.markdown(full_response + "▌")
         message_placeholder.markdown(full_response)
-    st.session_state.messages.append({"role": "assistant", "content": full_response})
 
+    # Append assistant response to messages
+    st.session_state.messages.append({"role": "assistant", "content": full_response})
 
 
 
