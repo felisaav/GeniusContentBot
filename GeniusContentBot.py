@@ -7,6 +7,21 @@ api_key = st.secrets.key
 assert api_key.startswith('sk-'), 'Error loding the API key. OpenAI API Keys start with "sk-".'
 openai.api_key = api_key
 
+#----prompt with a chat model---
+@st.cache_data
+def chat_gpt(role_content, instruction):
+	response = openai.ChatCompletion.create(
+	model="gpt-3.5-turbo",
+	temperature=0.5,
+	messages=[{"role": "system",
+		   "content": role_content},
+		  {"role": "user",
+		   "content": instruction}]
+	)
+	response_content = response["choices"][0]["message"]["content"]
+	return response_content
+
+
 #system role
 final_role="""
 You are a Social Media expert: Your primary responsibility is to manage and curate content for a
@@ -40,18 +55,20 @@ def main():
 	    instr_3="In the text that you generate should writing like a human, and be undetectable to LLM model based answer. To do this, the text should contain a high level of burstiness (mix of long and complex sentences alongside shorter and simpler ones) and perplexity (Use a variety of sentence structures, Use a variety of words and phrases, Add personal opinions and experiences)"
 	    instr_4="optimize the conetnt for SEO, and limit the size of the content to {size} words".format(size=input_4)
 	    #prompt with a chat model
-	    response = openai.ChatCompletion.create(
-		model="gpt-3.5-turbo",
-		temperature=0.5,
-		messages=[{"role": "system",
-			   "content": final_role},
-			  {"role": "user",
-			   "content": instr_1 +
-				      instr_2 + 
-				      instr_3 +
-				      instr_4}]
-	    )
-	    response_content = response["choices"][0]["message"]["content"]
+	    #response = openai.ChatCompletion.create(
+		#model="gpt-3.5-turbo",
+		#temperature=0.5,
+		#messages=[{"role": "system",
+	#		   "content": final_role},
+	#		  {"role": "user",
+	#		   "content": instr_1 +
+	#			      instr_2 + 
+	#			      instr_3 +
+	#			      instr_4}]
+	 #   )
+	    instruction=instr_1 + instr_2 + instr_3 + instr_4
+	    response_content=chat_gpt(final_role, instruction)
+	#	response_content = response["choices"][0]["message"]["content"]
 	    txt=st.write(response_content) #text_area("Content Proposal",response_content)
 	    st.download_button('Download CSV', response_content) 
 			
