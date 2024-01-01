@@ -1,36 +1,6 @@
 from openai import OpenAI
 import streamlit as st
 
-# Sidebar inputs
-style = [
-    "Use a Conversational Tone: Engage your audience as if you're having a friendly chat, making your brand more approachable.",
-    "Use a Playful Tone: Infuse humor and playfulness into your marketing messages to entertain and delight your audience.",
-    "Use a Professional Tone: Maintain a formal and business-like demeanor to establish trust and credibility.",
-    "Use a Persuasive Tone: Craft compelling and persuasive messages to convince your audience to take a specific action, such as making a purchase.",
-    "Use a Personalized Tone: Tailor your communication to individual customers, making them feel valued and special.",
-    "Use a Storytelling Tone: Create narratives that captivate and emotionally connect with your audience, making your brand memorable.",
-    "Use an Informative Tone: Share valuable information and insights about your product or industry to educate your audience.",
-    "Use an Empathetic Tone: Show understanding and empathy towards your customers' needs and concerns to build a stronger relationship.",
-    "Use a Trustworthy Tone: Emphasize your brand's reliability and integrity to build trust with your audience.",
-    "Use an Experiential Tone: Describe the experience customers can expect from your product or service to evoke desire and anticipation.",
-    "Use a Bold Tone: Make confident and assertive statements about your product's benefits or your brand's superiority and anticipation.",
-    "Use an Urgent Tone: Create a sense of urgency to encourage immediate action, such as limited-time offers.",
-    "Use a Grateful Tone: Express gratitude to your customers for their loyalty and support.",
-    "Use a Nostalgic Tone: Tap into feelings of nostalgia to create an emotional connection with your audience.",
-    "Use a FOMO (Fear of Missing Out) Tone: Highlight the fear of missing out on a great opportunity or product by not acting quickly.",
-    "Use an Aspirational Tone: Appeal to your audience's desires and aspirations, showing how your product can help them achieve their goals.",
-    "Use a Curious Tone: Ask thought-provoking questions to engage your audience and stimulate their curiosity.",
-    "Use a Reassuring Tone: Address potential concerns or objections to alleviate doubts and build trust.",
-    "Use an Exclusive Tone: Make your audience feel special by offering exclusive access or benefits.",
-    "User-Generated Content (UGC) Tone: Encourage customers to share their experiences with your product or service, fostering trust and authenticity."
-]
-
-# Display sidebar inputs
-#st.sidebar.title("Chat Parameters")
-#input_3 = st.sidebar.selectbox("Which language do you want to use?", ["English", "Spanish"])
-#input_4 = st.sidebar.number_input("Do you want to limit the size of the content? Please provide the number of words", 0, 1000)
-#input_5 = st.sidebar.selectbox("What writing style do you want to use?", style)
-
 st.title("Genius Content Bot")
 
 # Initialize OpenAI client
@@ -77,3 +47,13 @@ if prompt := st.chat_input("What content do you want to generate?"):
 
     # Append assistant response to messages
     st.session_state.messages.append({"role": "assistant", "content": full_response})
+
+    # Add download button for the last response
+    if st.button("Download Last Response"):
+        st.download_button(
+            label="Download Response",
+            data=full_response,
+            key="download_response",
+            file_name="genius_content_response.txt",
+            mime="text/plain",
+        )
