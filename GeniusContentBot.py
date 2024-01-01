@@ -3,11 +3,54 @@ import streamlit as st
 
 st.title("ChatGPT-like clone")
 
-#client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 client = OpenAI(api_key=st.secrets.key)
-#api_key = st.secrets.key
-#assert api_key.startswith('sk-'), 'Error loding the API key. OpenAI API Keys start with "sk-".'
-#openai.api_key = api_key
+
+if "openai_model" not in st.session_state:
+    st.session_state["openai_model"] = "gpt-3.5-turbo"
+
+# Define the system role and content
+system_role = "assistant"
+system_content = "You are a Social Media expert: Your primary responsibility is to manage and curate content for a company's social media platforms, build a strong online presence, and engage with the audience. You also have to boost visibility, establish your brand as an industry authority, provide valuable information to address audience needs and challenges, position the company's brand as a trusted thought leader, enhance search engine visibility and drive organic traffic, attract and convert potential customers through targeted content, nurture existing relationships, and keep your company's brand top of mind. Additionally, you drive engagement by sharing diverse content on social platforms."
+
+# Initialize messages with the system role and content
+if "messages" not in st.session_state:
+    st.session_state.messages = [{"role": system_role, "content": system_content}]
+
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
+
+if prompt := st.chat_input("What is up?"):
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    with st.chat_message("user"):
+        st.markdown(prompt)
+
+    with st.chat_message("assistant"):
+        message_placeholder = st.empty()
+        full_response = ""
+        for response in client.chat.completions.create(
+            model=st.session_state["openai_model"],
+            messages=[
+                {"role": m["role"], "content": m["content"]}
+                for m in st.session_state.messages
+            ],
+            stream=True,
+        ):
+            full_response += (response.choices[0].delta.content or "")
+            message_placeholder.markdown(full_response + "▌")
+        message_placeholder.markdown(full_response)
+    st.session_state.messages.append({"role": "assistant", "content": full_response})
+
+
+
+
+'''
+from openai import OpenAI
+import streamlit as st
+
+st.title("ChatGPT-like clone")
+
+client = OpenAI(api_key=st.secrets.key)
 
 if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = "gpt-3.5-turbo"
@@ -39,7 +82,7 @@ if prompt := st.chat_input("What is up?"):
             message_placeholder.markdown(full_response + "▌")
         message_placeholder.markdown(full_response)
     st.session_state.messages.append({"role": "assistant", "content": full_response})
-
+'''
 
 
 
