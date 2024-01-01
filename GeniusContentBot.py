@@ -2,7 +2,7 @@ from openai import OpenAI
 import streamlit as st
 
 st.title("Genius Content Bot")
-st.subtitle("Craft compelling content tailored to elevate your company's brand to new heights")  
+st.markdown("Craft compelling content tailored to elevate your company's brand to new heights")  
 st.markdown("""---""")
 
 # Initialize OpenAI client
