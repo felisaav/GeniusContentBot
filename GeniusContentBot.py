@@ -5,6 +5,12 @@ st.title("Genius Content Bot")
 st.markdown("Craft compelling content tailored to elevate your company's brand to new heights")  
 st.markdown("""---""")
 
+#sidebar
+def reset_conversation():
+  st.session_state.conversation = None
+  st.session_state.chat_history = None
+st.sidebar.button('Reset Chat', on_click=reset_conversation)
+
 # Initialize OpenAI client
 client = OpenAI(api_key=st.secrets.key)
 
