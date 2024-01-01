@@ -10,7 +10,7 @@ def reset_conversation():
   st.session_state.messages = []  # Clear the conversation
   st.session_state.conversation = None
   st.session_state.chat_history = None
-st.sidebar.write('**Parameters')
+st.sidebar.write('*Parameters*')
 st.sidebar.button('Reset Chat', on_click=reset_conversation)
 
 # Initialize OpenAI client
