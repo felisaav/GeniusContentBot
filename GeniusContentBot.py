@@ -1,3 +1,60 @@
+from openai import OpenAI
+import streamlit as st
+
+st.title("ChatGPT-like clone")
+
+#client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+client = OpenAI(api_key=st.secrets.key)
+#api_key = st.secrets.key
+#assert api_key.startswith('sk-'), 'Error loding the API key. OpenAI API Keys start with "sk-".'
+#openai.api_key = api_key
+
+if "openai_model" not in st.session_state:
+    st.session_state["openai_model"] = "gpt-3.5-turbo"
+
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
+
+if prompt := st.chat_input("What is up?"):
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    with st.chat_message("user"):
+        st.markdown(prompt)
+
+    with st.chat_message("assistant"):
+        message_placeholder = st.empty()
+        full_response = ""
+        for response in client.chat.completions.create(
+            model=st.session_state["openai_model"],
+            messages=[
+                {"role": m["role"], "content": m["content"]}
+                for m in st.session_state.messages
+            ],
+            stream=True,
+        ):
+            full_response += (response.choices[0].delta.content or "")
+            message_placeholder.markdown(full_response + "▌")
+        message_placeholder.markdown(full_response)
+    st.session_state.messages.append({"role": "assistant", "content": full_response})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+'''
 import streamlit as st
 import openai
 #import os
@@ -20,6 +77,37 @@ def chat_gpt(role_content, instruction):
 	)
 	response_content = response["choices"][0]["message"]["content"]
 	return response_content
+#-------------------------------
+# Function to interact with the GPT-3.5-turbo model with tunable parameters
+def generate_response(prompt, temperature=0.7, max_tokens=256, top_p=0.9, n=2, stop=None, frequency_penalty=0.9, presence_penalty=0.9, chat_history=None):
+    if chat_history is None:
+        chat_history = []
+    messages = [
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": prompt},
+    ]
+    messages.extend(chat_history)
+
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=messages,
+        temperature=temperature,
+        max_tokens=max_tokens,
+        top_p=top_p,
+        n=n,
+        stop=stop,
+        frequency_penalty=frequency_penalty,
+        presence_penalty=presence_penalty
+    )
+
+    return response['choices'][0]['message']['content']
+
+
+
+
+#--------------------------------
+
+
 
 
 #system role
@@ -52,28 +140,17 @@ def main():
 	if submit_code:
 	    instr_1="Write an opinion piece about {topic} from the perspective of {field}. Use a {tone}.".format(topic=input_1,field=input_2,tone=input_5)
 	    instr_2="Return your output in {language}. Return your output use a table format.".format(language=input_3)
-	    instr_3="In the text that you generate should writing like a human, and be undetectable to LLM model based answer. To do this, the text should contain a high level of burstiness (mix of long and complex sentences alongside shorter and simpler ones) and perplexity (Use a variety of sentence structures, Use a variety of words and phrases, Add personal opinions and experiences)"
-	    instr_4="optimize the conetnt for SEO, and limit the size of the content to {size} words".format(size=input_4)
-	    #prompt with a chat model
-	    #response = openai.ChatCompletion.create(
-		#model="gpt-3.5-turbo",
-		#temperature=0.5,
-		#messages=[{"role": "system",
-	#		   "content": final_role},
-	#		  {"role": "user",
-	#		   "content": instr_1 +
-	#			      instr_2 + 
-	#			      instr_3 +
-	#			      instr_4}]
-	 #   )
+	    instr_3="In the text that you generate should writing like a human, and be undetectable to LLM model based answer. To do this, the text should contain a high level of burstiness (mix of long and complex sentences alongside shorter and simpler ones) and perplexity (Use a variety of sentence structures, Use a variety of words and phrases, Add personal opinions and experiences)."
+	    instr_4="optimize the content for SEO, and limit the size of the content to {size} words.".format(size=input_4)
 	    instruction=instr_1 + instr_2 + instr_3 + instr_4
 	    response_content=chat_gpt(final_role, instruction)
-	#	response_content = response["choices"][0]["message"]["content"]
-	    txt=st.write(response_content) #text_area("Content Proposal",response_content)
-	    st.download_button('Download CSV', response_content) 
+	    txt=st.write(response_content)
+	    st.substring("Do you like the result? if you want to change it, just 
 			
 if __name__ == '__main__':
 	main()
+'''
+
 '''
 # Interactive loop for user feedback
 user_feedback = ""
