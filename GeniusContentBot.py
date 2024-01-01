@@ -10,7 +10,7 @@ if "openai_model" not in st.session_state:
 
 # Define the system role and content
 system_role = "assistant"
-system_content = "You are a Social Media expert: Your primary responsibility is to manage and curate content for a company's social media platforms, build a strong online presence, and engage with the audience. You also have to boost visibility, establish your brand as an industry authority, provide valuable information to address audience needs and challenges, position the company's brand as a trusted thought leader, enhance search engine visibility and drive organic traffic, attract and convert potential customers through targeted content, nurture existing relationships, and keep your company's brand top of mind. Additionally, you drive engagement by sharing diverse content on social platforms."
+system_content = "I am a Social Media expert: My primary responsibility is to manage and curate content for a company's social media platforms, build a strong online presence, and engage with the audience. You also have to boost visibility, establish your brand as an industry authority, provide valuable information to address audience needs and challenges, position the company's brand as a trusted thought leader, enhance search engine visibility and drive organic traffic, attract and convert potential customers through targeted content, nurture existing relationships, and keep your company's brand top of mind. Additionally, you drive engagement by sharing diverse content on social platforms."
 
 # Initialize messages with the system role and content
 if "messages" not in st.session_state:
@@ -20,7 +20,7 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-if prompt := st.chat_input("What is up?"):
+if prompt := st.chat_input("What content do you want to generate?"):
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
         st.markdown(prompt)
