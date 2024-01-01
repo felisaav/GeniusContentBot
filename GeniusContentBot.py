@@ -54,7 +54,7 @@ def main():
 		    )
 		    response_content = response["choices"][0]["message"]["content"]
 		    txt=st.write(response_content) #text_area("Content Proposal",response_content)
-		st.download_button('Download CSV', text_contents) 
+		#st.download_button('Download CSV', text_contents) 
 			
 if __name__ == '__main__':
 	main()
