@@ -23,7 +23,6 @@ style=["Use a Conversational Tone: Engage your audience as if you're having a fr
 
 
 def main():
-	txt=''
 	with st.sidebar.form(key ='Form1'):
 		st.title("Enter information")
 		input_1=st.text_input("what is the topic that you want to write?")
@@ -55,7 +54,7 @@ def main():
 		    )
 		    response_content = response["choices"][0]["message"]["content"]
 		    txt=st.write(response_content) #text_area("Content Proposal",response_content)
-		    st.download_button('Download CSV', text_contents) 
+		st.download_button('Download CSV', text_contents) 
 			
 if __name__ == '__main__':
 	main()
