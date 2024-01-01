@@ -11,7 +11,7 @@ def reset_conversation():
   st.session_state.conversation = None
   st.session_state.chat_history = None
 st.sidebar.write('*Parameters*')
-st.sidebar.button('Reset Chat', on_click=reset_conversation)
+st.sidebar.button('Start with a new content chat', on_click=reset_conversation)
 
 # Initialize OpenAI client
 client = OpenAI(api_key=st.secrets.key)
