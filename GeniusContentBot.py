@@ -2,6 +2,8 @@ from openai import OpenAI
 import streamlit as st
 
 st.title("Genius Content Bot")
+st.subtitle("Craft compelling content tailored to elevate your company's brand to new heights")  
+st.markdown("""---""")
 
 # Initialize OpenAI client
 client = OpenAI(api_key=st.secrets.key)
@@ -50,11 +52,3 @@ if prompt := st.chat_input("What content do you want to generate?"):
 
     # Add download button for the last response
     st.download_button('Download Last Response', full_response)
-    #if st.button("Download Last Response"):
-    #    response_file = open("genius_content_response.txt", "w")
-    #    response_file.write(full_response)
-    #    response_file.close()
-    #    st.markdown(
-    #        "[Download your response](sandbox:/genius_content_response.txt)",
-    #        unsafe_allow_html=True,
-    #    )
