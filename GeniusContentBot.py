@@ -26,7 +26,7 @@ style = [
 ]
 
 # Display sidebar inputs
-st.sidebar.title("Chat Parameters")
+#st.sidebar.title("Chat Parameters")
 #input_3 = st.sidebar.selectbox("Which language do you want to use?", ["English", "Spanish"])
 #input_4 = st.sidebar.number_input("Do you want to limit the size of the content? Please provide the number of words", 0, 1000)
 #input_5 = st.sidebar.selectbox("What writing style do you want to use?", style)
