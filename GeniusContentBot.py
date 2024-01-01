@@ -33,27 +33,26 @@ def main():
 		submit_code = st.form_submit_button(label ="Execute")
 	st.title("Project - Genius Content Assistant")
 	st.markdown("""---""")
-
-	with st.form(key='my_form'):
-		if submit_code:
-		    instr_1="Write an opinion piece about {topic} from the perspective of {field}. Use a {tone}.".format(topic=input_1,field=input_2,tone=input_5)
-		    instr_2="Return your output in {language}. Return your output use a table format.".format(language=input_3)
-		    instr_3="In the text that you generate should writing like a human, and be undetectable to LLM model based answer. To do this, the text should contain a high level of burstiness (mix of long and complex sentences alongside shorter and simpler ones) and perplexity (Use a variety of sentence structures, Use a variety of words and phrases, Add personal opinions and experiences)"
-		    instr_4="optimize the conetnt for SEO, and limit the size of the content to {size} words".format(size=input_4)
-		    #prompt with a chat model
-		    response = openai.ChatCompletion.create(
-			model="gpt-3.5-turbo",
-			temperature=0.5,
-			messages=[{"role": "system",
-				   "content": final_role},
-				  {"role": "user",
-				   "content": instr_1 +
-					      instr_2 + 
-					      instr_3 +
-					      instr_4}]
-		    )
-		    response_content = response["choices"][0]["message"]["content"]
-		txt=st.write(response_content) #text_area("Content Proposal",response_content)
+	#with st.form(key='my_form'):
+	if submit_code:
+	    instr_1="Write an opinion piece about {topic} from the perspective of {field}. Use a {tone}.".format(topic=input_1,field=input_2,tone=input_5)
+	    instr_2="Return your output in {language}. Return your output use a table format.".format(language=input_3)
+	    instr_3="In the text that you generate should writing like a human, and be undetectable to LLM model based answer. To do this, the text should contain a high level of burstiness (mix of long and complex sentences alongside shorter and simpler ones) and perplexity (Use a variety of sentence structures, Use a variety of words and phrases, Add personal opinions and experiences)"
+	    instr_4="optimize the conetnt for SEO, and limit the size of the content to {size} words".format(size=input_4)
+	    #prompt with a chat model
+	    response = openai.ChatCompletion.create(
+		model="gpt-3.5-turbo",
+		temperature=0.5,
+		messages=[{"role": "system",
+			   "content": final_role},
+			  {"role": "user",
+			   "content": instr_1 +
+				      instr_2 + 
+				      instr_3 +
+				      instr_4}]
+	    )
+	    response_content = response["choices"][0]["message"]["content"]
+	    txt=st.write(response_content) #text_area("Content Proposal",response_content)
 		#st.download_button('Download CSV', text_contents) 
 			
 if __name__ == '__main__':
