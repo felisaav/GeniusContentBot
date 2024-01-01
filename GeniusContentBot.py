@@ -7,6 +7,7 @@ st.markdown("""---""")
 
 #sidebar
 def reset_conversation():
+  st.session_state.messages = []  # Clear the conversation
   st.session_state.conversation = None
   st.session_state.chat_history = None
 st.sidebar.button('Reset Chat', on_click=reset_conversation)
@@ -24,8 +25,11 @@ engage the audience, and establish the brand as an industry authority. The focus
 audience needs, and driving engagement through diverse content.'''
 
 # Initialize messages with the system role and content
-if "messages" not in st.session_state:
+if "messages" not in st.session_state or not st.session_state.messages:
     st.session_state.messages = [{"role": system_role, "content": system_content}]
+
+#if "messages" not in st.session_state:
+#    st.session_state.messages = [{"role": system_role, "content": system_content}]
 
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
