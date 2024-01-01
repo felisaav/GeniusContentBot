@@ -20,7 +20,7 @@ if "openai_model" not in st.session_state:
 
 # Define the system role and content
 system_role = "assistant"
-system_content = f'''I manage and curate content for a company's social media, aiming to build a strong online presence, 
+system_content = '''I manage and curate content for a company's social media, aiming to build a strong online presence, 
 engage the audience, and establish the brand as an industry authority. The focus is on boosting visibility, addressing 
 audience needs, and driving engagement through diverse content.'''
 
