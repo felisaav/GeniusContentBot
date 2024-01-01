@@ -25,17 +25,18 @@ style = [
     "User-Generated Content (UGC) Tone: Encourage customers to share their experiences with your product or service, fostering trust and authenticity."
 ]
 
-input_3 = st.selectbox("Which language do you want to use?", ["English", "Spanish"])
-input_4 = st.number_input("Do you want to limit the size of the content? Please provide the number of words", 0, 1000)
-input_5 = st.selectbox("What writing style do you want to use?", style)
-
 # Display sidebar inputs
 st.sidebar.title("Chat Parameters")
-st.sidebar.write("Language:", input_3)
-st.sidebar.write("Word Limit:", input_4)
-st.sidebar.write("Writing Style:", input_5)
+input_3 = st.sidebar.selectbox("Which language do you want to use?", ["English", "Spanish"])
+input_4 = st.sidebar.number_input("Do you want to limit the size of the content? Please provide the number of words", 0, 1000)
+input_5 = st.sidebar.selectbox("What writing style do you want to use?", style)
 
-st.title("ChatGPT-like clone")
+
+#st.sidebar.write("Language:", input_3)
+#st.sidebar.write("Word Limit:", input_4)
+#st.sidebar.write("Writing Style:", input_5)
+
+st.title("Genius Content Bot")
 
 # Initialize OpenAI client
 client = OpenAI(api_key=st.secrets.key)
