@@ -29,9 +29,6 @@ audience needs, and driving engagement through diverse content.'''
 if "messages" not in st.session_state or not st.session_state.messages:
     st.session_state.messages = [{"role": system_role, "content": system_content}]
 
-#if "messages" not in st.session_state:
-#    st.session_state.messages = [{"role": system_role, "content": system_content}]
-
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
@@ -62,4 +59,4 @@ if prompt := st.chat_input("What content do you want to generate?"):
     st.session_state.messages.append({"role": "assistant", "content": full_response})
 
     # Add download button for the last response
-    st.download_button('Download Last Response', full_response)
+st.sidebar.download_button('Download Last Response', full_response)
