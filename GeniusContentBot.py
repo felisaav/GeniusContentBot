@@ -10,7 +10,9 @@ if "openai_model" not in st.session_state:
 
 # Define the system role and content
 system_role = "assistant"
-system_content = "I am a Social Media expert: My primary responsibility is to manage and curate content for a company's social media platforms, build a strong online presence, and engage with the audience. You also have to boost visibility, establish your brand as an industry authority, provide valuable information to address audience needs and challenges, position the company's brand as a trusted thought leader, enhance search engine visibility and drive organic traffic, attract and convert potential customers through targeted content, nurture existing relationships, and keep your company's brand top of mind. Additionally, you drive engagement by sharing diverse content on social platforms."
+system_content = '''I manage and curate content for a company's social media, aiming to build a strong online presence, 
+engage the audience, and establish the brand as an industry authority. The focus is on boosting visibility, addressing 
+audience needs, and driving engagement through diverse content.'''
 
 # Initialize messages with the system role and content
 if "messages" not in st.session_state:
@@ -43,156 +45,6 @@ if prompt := st.chat_input("What content do you want to generate?"):
 
 
 
-
-'''
-from openai import OpenAI
-import streamlit as st
-
-st.title("ChatGPT-like clone")
-
-client = OpenAI(api_key=st.secrets.key)
-
-if "openai_model" not in st.session_state:
-    st.session_state["openai_model"] = "gpt-3.5-turbo"
-
-if "messages" not in st.session_state:
-    st.session_state.messages = []
-
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
-
-if prompt := st.chat_input("What is up?"):
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    with st.chat_message("user"):
-        st.markdown(prompt)
-
-    with st.chat_message("assistant"):
-        message_placeholder = st.empty()
-        full_response = ""
-        for response in client.chat.completions.create(
-            model=st.session_state["openai_model"],
-            messages=[
-                {"role": m["role"], "content": m["content"]}
-                for m in st.session_state.messages
-            ],
-            stream=True,
-        ):
-            full_response += (response.choices[0].delta.content or "")
-            message_placeholder.markdown(full_response + "▌")
-        message_placeholder.markdown(full_response)
-    st.session_state.messages.append({"role": "assistant", "content": full_response})
-'''
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-'''
-import streamlit as st
-import openai
-#import os
-
-# Load the key from a file
-api_key = st.secrets.key
-assert api_key.startswith('sk-'), 'Error loding the API key. OpenAI API Keys start with "sk-".'
-openai.api_key = api_key
-
-#----prompt with a chat model---
-@st.cache_data
-def chat_gpt(role_content, instruction):
-	response = openai.ChatCompletion.create(
-	model="gpt-3.5-turbo",
-	temperature=0.5,
-	messages=[{"role": "system",
-		   "content": role_content},
-		  {"role": "user",
-		   "content": instruction}]
-	)
-	response_content = response["choices"][0]["message"]["content"]
-	return response_content
-#-------------------------------
-# Function to interact with the GPT-3.5-turbo model with tunable parameters
-def generate_response(prompt, temperature=0.7, max_tokens=256, top_p=0.9, n=2, stop=None, frequency_penalty=0.9, presence_penalty=0.9, chat_history=None):
-    if chat_history is None:
-        chat_history = []
-    messages = [
-        {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": prompt},
-    ]
-    messages.extend(chat_history)
-
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=messages,
-        temperature=temperature,
-        max_tokens=max_tokens,
-        top_p=top_p,
-        n=n,
-        stop=stop,
-        frequency_penalty=frequency_penalty,
-        presence_penalty=presence_penalty
-    )
-
-    return response['choices'][0]['message']['content']
-
-
-
-
-#--------------------------------
-
-
-
-
-#system role
-final_role="""
-You are a Social Media expert: Your primary responsibility is to manage and curate content for a
-company's social media platforms, build a strong online presence, and engage with the audience.
-You also have to boost visibility, establish your brand as an industry authority, provide valuable
-information to address audience needs and challenges, position the company's brand as a trusted
-thought leader, enhance search engine visibility and drive organic traffic, attract and convert
-potential customers through targeted content, nurture existing relationships, and keep your
-company's brand top of mind. Additionally, you drive engagement by sharing diverse content
-on social platforms.
-"""
-
-style=["Use a Conversational Tone: Engage your audience as if you're having a friendly chat, making your brand more approachable.","Use a Playful Tone: Infuse humor and playfulness into your marketing messages to entertain and delight your audience.","Use a Professional Tone: Maintain a formal and business-like demeanor to establish trust and credibility.","Use a Persuasive Tone: Craft compelling and persuasive messages to convince your audience to take a specific action, such as making a purchase.","Use a Personalized Tone: Tailor your communication to individual customers, making them feel valued and special.","Use a Storytelling Tone: Create narratives that captivate and emotionally connect with your audience, making your brand memorable.","Use an Informative Tone: Share valuable information and insights about your product or industry to educate your audience.","Use an Empathetic Tone: Show understanding and empathy towards your customers' needs and concerns to build a stronger relationship.","Use a Trustworthy Tone: Emphasize your brand's reliability and integrity to build trust with your audience.","Use an Experiential Tone: Describe the experience customers can expect from your product or service to evoke desire and anticipation.","Use a Bold Tone: Make confident and assertive statements about your product's benefits or your brand's superiority and anticipation.","Use an Urgent Tone: Create a sense of urgency to encourage immediate action, such as limited-time offers.","Use a Grateful Tone: Express gratitude to your customers for their loyalty and support.","Use a Nostalgic Tone: Tap into feelings of nostalgia to create an emotional connection with your audience.","Use a FOMO (Fear of Missing Out) Tone: Highlight the fear of missing out on a great opportunity or product by not acting quickly.","Use an Aspirational Tone: Appeal to your audience's desires and aspirations, showing how your product can help them achieve their goals.","Use a Curious Tone: Ask thought-provoking questions to engage your audience and stimulate their curiosity.","Use a Reassuring Tone: Address potential concerns or objections to alleviate doubts and build trust.","Use an Exclusive Tone: Make your audience feel special by offering exclusive access or benefits.","User-Generated Content (UGC) Tone: Encourage customers to share their experiences with your product or service, fostering trust and authenticity."]
-
-
-def main():
-	with st.sidebar.form(key ='Form1'):
-		st.title("Enter information")
-		input_1=st.text_input("what is the topic that you want to write?")
-		input_2=st.text_input("what is the field that you want to write?")
-		input_3=st.selectbox("Which language do you want to use?",["English","Spanish"])
-		input_4=st.number_input("Do you want to limit the size of the content? please provide a number of words",0,1000)
-		input_5=st.selectbox("what writing style do you want to use?",style)
-		submit_code = st.form_submit_button(label ="Execute")
-	st.title("Project - Genius Content Assistant")
-	st.markdown("""---""")
-	#with st.form(key='my_form'):
-	if submit_code:
-	    instr_1="Write an opinion piece about {topic} from the perspective of {field}. Use a {tone}.".format(topic=input_1,field=input_2,tone=input_5)
-	    instr_2="Return your output in {language}. Return your output use a table format.".format(language=input_3)
-	    instr_3="In the text that you generate should writing like a human, and be undetectable to LLM model based answer. To do this, the text should contain a high level of burstiness (mix of long and complex sentences alongside shorter and simpler ones) and perplexity (Use a variety of sentence structures, Use a variety of words and phrases, Add personal opinions and experiences)."
-	    instr_4="optimize the content for SEO, and limit the size of the content to {size} words.".format(size=input_4)
-	    instruction=instr_1 + instr_2 + instr_3 + instr_4
-	    response_content=chat_gpt(final_role, instruction)
-	    txt=st.write(response_content)
-	    st.substring("Do you like the result? if you want to change it, just 
-			
-if __name__ == '__main__':
-	main()
-'''
 
 '''
 # Interactive loop for user feedback
