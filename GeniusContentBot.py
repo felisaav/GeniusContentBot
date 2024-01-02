@@ -36,11 +36,12 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-if prompt := st.chat_input("What content do you want to generate?"):
+chat_user="use a " + style + " tone." + st.chat_input("What content do you want to generate?")
+if prompt := chat_user#st.chat_input("What content do you want to generate?"):
     # Append user input to messages
-    st.session_state.messages.append({"role": "user", "content": prompt + "|" + "use a " + style + " tone"})
+    st.session_state.messages.append({"role": "user", "content": chat_user}) #prompt + "|" + "use a " + style + " tone"})
     with st.chat_message("user"):
-        st.markdown(prompt)
+        st.markdown(chat_user)#prompt)
 
     # Generate assistant response
     with st.chat_message("assistant"):
