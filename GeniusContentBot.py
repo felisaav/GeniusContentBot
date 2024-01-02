@@ -18,7 +18,7 @@ with st.form("my_form"):
                                              'Informative','Empathetic','Trustworthy','Experiential','Bold','Urgent','Grateful',
                                              'Nostalgic','FOMO (Fear of Missing Out)','Aspirational','Curious','Reassuring','Exclusive',
                                              'User-Generated Content (UGC)'])
-  submitted = st.form_submit_button("Submit")
+   submitted = st.form_submit_button("Submit")
 
 # Initialize OpenAI client
 client = OpenAI(api_key=st.secrets.key)
