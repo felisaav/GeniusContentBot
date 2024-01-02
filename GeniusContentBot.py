@@ -12,10 +12,14 @@ def reset_conversation():
   st.session_state.chat_history = None
 st.sidebar.write('*Parameters*')
 st.sidebar.button('Start with a new content chat', on_click=reset_conversation)
-style=st.sidebar.selectbox("Pick a style of tone",['Conversational','Playful','Professional','Persuasive','Personalized','Storytelling',
+with st.form("my_form"):
+   st.write("Style Parameter")
+   style=st.sidebar.selectbox("Pick a style of tone",['Conversational','Playful','Professional','Persuasive','Personalized','Storytelling',
                                              'Informative','Empathetic','Trustworthy','Experiential','Bold','Urgent','Grateful',
                                              'Nostalgic','FOMO (Fear of Missing Out)','Aspirational','Curious','Reassuring','Exclusive',
                                              'User-Generated Content (UGC)'])
+  submitted = st.form_submit_button("Submit")
+
 # Initialize OpenAI client
 client = OpenAI(api_key=st.secrets.key)
 
@@ -37,8 +41,11 @@ for message in st.session_state.messages:
         st.markdown(message["content"])
 
 user_input = st.chat_input("What content do you want to generate?")
-chat_user = f"use a {style} tone." + (user_input if user_input is not None else "")
-
+if submitted:
+  chat_user = f"use a {style} tone." + (user_input if user_input is not None else "")
+else:
+  chat_user = user_input
+  
 #chat_user="use a " + style + " tone." + st.chat_input("What content do you want to generate?")
 if prompt := chat_user:#st.chat_input("What content do you want to generate?"):
     # Append user input to messages
