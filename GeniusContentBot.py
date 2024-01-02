@@ -11,7 +11,7 @@ def reset_conversation():
   st.session_state.conversation = None
   st.session_state.chat_history = None
 
-st.sidebar.write('*Parameters*')
+st.sidebar.markdown('*Parameters*',help='Here you can reset and start a new conversation, or you can download your last answer')
 st.sidebar.button('Start with a new content chat', on_click=reset_conversation)
 
 #   style=st.selectbox("Pick a style of tone",['Conversational','Playful','Professional','Persuasive','Personalized','Storytelling',
