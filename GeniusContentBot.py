@@ -2,9 +2,7 @@ from openai import OpenAI
 import streamlit as st
 
 st.title("Genius Content Bot","Let's create the best content ever, through a conversation I can create a great content to improve your's company brand reputation")
-st.markdown("Craft compelling content tailored to elevate your company's brand to new heights") 
-st.markdown("Don't forget to define the content style, length, communication channel, language and any other aspect")
-st.markdown("And...As simple as a natural conversation!")
+st.markdown("Elevate your brand effortlessly with tailored, conversational content across diverse channels. Crafted for impact, simplicity, and authenticity") 
 st.markdown("""---""")
 
 #sidebar
