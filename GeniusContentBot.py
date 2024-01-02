@@ -14,13 +14,10 @@ def reset_conversation():
 st.sidebar.write('*Parameters*')
 st.sidebar.button('Start with a new content chat', on_click=reset_conversation)
 
-with st.sidebar.form("my_form"):
-   st.write("Style Parameter")
-   style=st.selectbox("Pick a style of tone",['Conversational','Playful','Professional','Persuasive','Personalized','Storytelling',
-                                             'Informative','Empathetic','Trustworthy','Experiential','Bold','Urgent','Grateful',
-                                             'Nostalgic','FOMO (Fear of Missing Out)','Aspirational','Curious','Reassuring','Exclusive',
-                                             'User-Generated Content (UGC)'])
-   submitted = st.form_submit_button("Submit")
+#   style=st.selectbox("Pick a style of tone",['Conversational','Playful','Professional','Persuasive','Personalized','Storytelling',
+#                                             'Informative','Empathetic','Trustworthy','Experiential','Bold','Urgent','Grateful',
+#                                             'Nostalgic','FOMO (Fear of Missing Out)','Aspirational','Curious','Reassuring','Exclusive',
+#                                             'User-Generated Content (UGC)'])
 
 # Initialize OpenAI client
 client = OpenAI(api_key=st.secrets.key)
@@ -43,19 +40,14 @@ for message in st.session_state.messages:
         st.markdown(message["content"])
 
 user_input = st.chat_input("What content do you want to generate?")
+#-----------------------
 
-# Check if user submitted the form and update chat_user accordingly
-if submitted:
-  chat_user = f"use a {style} tone." #+ (user_input if user_input is not None else "")
-else:
-  chat_user = user_input
-  
-if prompt := chat_user:#st.chat_input("What content do you want to generate?"):
-    # Append user input to messages
-    st.session_state.messages.append({"role": "user", "content": chat_user}) #prompt + "|" + "use a " + style + " tone"})
+if prompt := st.chat_input("What content do you want to generate?"):
+  # Append user input to messages
+    st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
-        st.markdown(chat_user)#prompt)
-
+      st.markdown(prompt)
+  
     # Generate assistant response
     with st.chat_message("assistant"):
         message_placeholder = st.empty()
