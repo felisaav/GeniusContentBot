@@ -69,3 +69,6 @@ with tab1:
   
       # Add download button for the last response
       st.sidebar.download_button('Download Last Response', full_response)
+
+with tab2:
+    st.write("Hello world")
