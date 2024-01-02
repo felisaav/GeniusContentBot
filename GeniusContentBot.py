@@ -12,7 +12,10 @@ def reset_conversation():
   st.session_state.chat_history = None
 st.sidebar.write('*Parameters*')
 st.sidebar.button('Start with a new content chat', on_click=reset_conversation)
-st.sidebar.selectbox("Pick a style of tone",['Conversational','Playful','Professional','Persuasive','Personalized','Storytelling','Informative','Empathetic','Trustworthy','Experiential','Bold','Urgent','Grateful','Nostalgic','FOMO (Fear of Missing Out)','Aspirational','Curious','Reassuring','Exclusive','User-Generated Content (UGC)'])
+style=st.sidebar.selectbox("Pick a style of tone",['Conversational','Playful','Professional','Persuasive','Personalized','Storytelling',
+                                             'Informative','Empathetic','Trustworthy','Experiential','Bold','Urgent','Grateful',
+                                             'Nostalgic','FOMO (Fear of Missing Out)','Aspirational','Curious','Reassuring','Exclusive',
+                                             'User-Generated Content (UGC)'])
 # Initialize OpenAI client
 client = OpenAI(api_key=st.secrets.key)
 
@@ -35,7 +38,7 @@ for message in st.session_state.messages:
 
 if prompt := st.chat_input("What content do you want to generate?"):
     # Append user input to messages
-    st.session_state.messages.append({"role": "user", "content": prompt})
+    st.session_state.messages.append({"role": "user", "content": prompt + "|" + "use a " + style + " tone"})
     with st.chat_message("user"):
         st.markdown(prompt)
 
