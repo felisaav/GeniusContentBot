@@ -50,44 +50,6 @@ if submitted:
 else:
   chat_user = user_input
   
-#chat_user="use a " + style + " tone." + st.chat_input("What content do you want to generate?")
-#------------------------------------------------------------------------------------
-#NEW PROPOSAL
-# Display user input in the chat
-if chat_user:
-    # Append user input to messages
-    st.session_state.messages.append({"role": "user", "content": chat_user})
-    with st.chat_message("user"):
-        st.markdown(chat_user)
-
-    # Clear user input field
-    st.text_area("Write your message to the assistant here:", value="", key="user_input")
-
-    # Do not proceed to assistant response in this block
-else:
-    # Generate assistant response
-    with st.chat_message("assistant"):
-        message_placeholder = st.empty()
-        full_response = ""
-        for response in client.chat.completions.create(
-                model=st.session_state["openai_model"],
-                messages=[
-                    {"role": m["role"], "content": m["content"]}
-                    for m in st.session_state.messages
-                ],
-                stream=True,
-        ):
-            full_response += (response.choices[0].delta.content or "")
-            message_placeholder.markdown(full_response + "▌")
-        message_placeholder.markdown(full_response)
-    # Append assistant response to messages
-    st.session_state.messages.append({"role": "assistant", "content": full_response})
-
-    # Add download button for the last response
-    st.sidebar.download_button('Download Last Response', full_response)
-#------------------------------------------------------------------------------------
-'''
-#------------------------------------------------------------------------------------
 if prompt := chat_user:#st.chat_input("What content do you want to generate?"):
     # Append user input to messages
     st.session_state.messages.append({"role": "user", "content": chat_user}) #prompt + "|" + "use a " + style + " tone"})
@@ -115,5 +77,4 @@ if prompt := chat_user:#st.chat_input("What content do you want to generate?"):
 
     # Add download button for the last response
     st.sidebar.download_button('Download Last Response', full_response)
-'''
-#------------------------------------------------------
+
