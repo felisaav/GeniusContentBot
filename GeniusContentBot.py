@@ -107,7 +107,7 @@ if prompt := chat_user:#st.chat_input("What content do you want to generate?"):
 '''
 #------------------------------------------------------
     # Append assistant response to messages
-  st.session_state.messages.append({"role": "assistant", "content": full_response})
+    st.session_state.messages.append({"role": "assistant", "content": full_response})
 
     # Add download button for the last response
     st.sidebar.download_button('Download Last Response', full_response)
