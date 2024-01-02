@@ -40,7 +40,7 @@ if prompt := st.chat_input("What content do you want to generate?"):
     # Append user input to messages
     st.session_state.messages.append({"role": "user", "content": prompt + "|" + "use a " + style + " tone"})
     with st.chat_message("user"):
-        st.markdown(prompt)
+        st.markdown(prompt+ "|" + "use a " + style + " tone")
 
     # Generate assistant response
     with st.chat_message("assistant"):
