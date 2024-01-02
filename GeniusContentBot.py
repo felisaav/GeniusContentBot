@@ -3,7 +3,7 @@ import streamlit as st
 
 st.title("Genius Content Bot","Let's create the best content ever, through a conversation I can create a great content to improve your's company brand reputation")
 st.markdown("Elevate your brand effortlessly with tailored, conversational content across diverse channels. Crafted for impact, simplicity, and authenticity",
-           help="don't forget to customize your style, lenght, language, and any relevant aspect to you") 
+           help="Make it uniquely yours! Customize the style, length, language, and all the fun stuff that speaks to your vibe. Let your content shine with your awesome personality!") 
 st.markdown("""---""")
 
 #sidebar
