@@ -80,6 +80,11 @@ else:
             full_response += (response.choices[0].delta.content or "")
             message_placeholder.markdown(full_response + "▌")
         message_placeholder.markdown(full_response)
+    # Append assistant response to messages
+    st.session_state.messages.append({"role": "assistant", "content": full_response})
+
+    # Add download button for the last response
+    st.sidebar.download_button('Download Last Response', full_response)
 #------------------------------------------------------------------------------------
 '''
 #------------------------------------------------------------------------------------
@@ -104,10 +109,11 @@ if prompt := chat_user:#st.chat_input("What content do you want to generate?"):
             full_response += (response.choices[0].delta.content or "")
             message_placeholder.markdown(full_response + "▌")
         message_placeholder.markdown(full_response)
-'''
-#------------------------------------------------------
+
     # Append assistant response to messages
     st.session_state.messages.append({"role": "assistant", "content": full_response})
 
     # Add download button for the last response
     st.sidebar.download_button('Download Last Response', full_response)
+'''
+#------------------------------------------------------
