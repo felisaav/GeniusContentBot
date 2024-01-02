@@ -15,7 +15,7 @@ st.sidebar.write('*Parameters*')
 st.sidebar.button('Start with a new content chat', on_click=reset_conversation)
 
 with st.sidebar.form("my_form"):
-   #st.write("Style Parameter")
+   st.write("Style Parameter")
    style=st.sidebar.selectbox("Pick a style of tone",['Conversational','Playful','Professional','Persuasive','Personalized','Storytelling',
                                              'Informative','Empathetic','Trustworthy','Experiential','Bold','Urgent','Grateful',
                                              'Nostalgic','FOMO (Fear of Missing Out)','Aspirational','Curious','Reassuring','Exclusive',
