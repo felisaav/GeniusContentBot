@@ -19,54 +19,53 @@ st.sidebar.button('Start with a new content chat', on_click=reset_conversation)
 #                                             'Nostalgic','FOMO (Fear of Missing Out)','Aspirational','Curious','Reassuring','Exclusive',
 #                                             'User-Generated Content (UGC)'])
 
-# Initialize OpenAI client
-client = OpenAI(api_key=st.secrets.key)
+tab1, tab2 = st.tabs(["Genius Content Bot","Read Me"])
 
-if "openai_model" not in st.session_state:
-    st.session_state["openai_model"] = "gpt-3.5-turbo"
-
-# Define the system role and content
-system_role = "assistant"
-system_content = '''I manage and curate content for a company's social media, aiming to build a strong online presence, 
-engage the audience, and establish the brand as an industry authority. The focus is on boosting visibility, addressing 
-audience needs, and driving engagement through diverse content.'''
-
-# Initialize messages with the system role and content
-if "messages" not in st.session_state or not st.session_state.messages:
-    st.session_state.messages = [{"role": system_role, "content": system_content}]
-
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
-
-#user_input = st.chat_input("What content do you want to generate?")
-#-----------------------
-
-if prompt := st.chat_input("What content do you want to generate?"):
-  # Append user input to messages
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    with st.chat_message("user"):
-      st.markdown(prompt)
+with tab1:
+  # Initialize OpenAI client
+  client = OpenAI(api_key=st.secrets.key)
   
-    # Generate assistant response
-    with st.chat_message("assistant"):
-        message_placeholder = st.empty()
-        full_response = ""
-        for response in client.chat.completions.create(
-            model=st.session_state["openai_model"],
-            messages=[
-                {"role": m["role"], "content": m["content"]}
-                for m in st.session_state.messages
-            ],
-            stream=True,
-        ):
-            full_response += (response.choices[0].delta.content or "")
-            message_placeholder.markdown(full_response + "▌")
-        message_placeholder.markdown(full_response)
-
-    # Append assistant response to messages
-    st.session_state.messages.append({"role": "assistant", "content": full_response})
-
-    # Add download button for the last response
-    st.sidebar.download_button('Download Last Response', full_response)
-
+  if "openai_model" not in st.session_state:
+      st.session_state["openai_model"] = "gpt-3.5-turbo"
+  
+  # Define the system role and content
+  system_role = "assistant"
+  system_content = '''I manage and curate content for a company's social media, aiming to build a strong online presence, 
+  engage the audience, and establish the brand as an industry authority. The focus is on boosting visibility, addressing 
+  audience needs, and driving engagement through diverse content.'''
+  
+  # Initialize messages with the system role and content
+  if "messages" not in st.session_state or not st.session_state.messages:
+      st.session_state.messages = [{"role": system_role, "content": system_content}]
+  
+  for message in st.session_state.messages:
+      with st.chat_message(message["role"]):
+          st.markdown(message["content"])
+  
+  if prompt := st.chat_input("What content do you want to generate?"):
+    # Append user input to messages
+      st.session_state.messages.append({"role": "user", "content": prompt})
+      with st.chat_message("user"):
+        st.markdown(prompt)
+    
+      # Generate assistant response
+      with st.chat_message("assistant"):
+          message_placeholder = st.empty()
+          full_response = ""
+          for response in client.chat.completions.create(
+              model=st.session_state["openai_model"],
+              messages=[
+                  {"role": m["role"], "content": m["content"]}
+                  for m in st.session_state.messages
+              ],
+              stream=True,
+          ):
+              full_response += (response.choices[0].delta.content or "")
+              message_placeholder.markdown(full_response + "▌")
+          message_placeholder.markdown(full_response)
+  
+      # Append assistant response to messages
+      st.session_state.messages.append({"role": "assistant", "content": full_response})
+  
+      # Add download button for the last response
+      st.sidebar.download_button('Download Last Response', full_response)
