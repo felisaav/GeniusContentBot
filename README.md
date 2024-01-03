@@ -33,7 +33,7 @@ Download the last generated response easily from the sidebar. This feature allow
 If you'd like to contribute to the project, feel free to fork the repository and submit a pull request. We welcome any improvements, bug fixes, or additional features!
 
 ## License
-This project is licensed under the MIT License.
+This project is licensed under the [MIT License](LICENSE.md).
 
 ## Acknowledgments
 This project utilizes the power of OpenAI's GPT-3.5 Turbo model.
