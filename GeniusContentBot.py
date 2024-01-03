@@ -15,11 +15,6 @@ def reset_conversation():
 st.sidebar.markdown('*Parameters*',help='Here you can reset and start a new conversation, or you can download your last answer')
 st.sidebar.button('Start with a new content chat', on_click=reset_conversation)
 
-#   style=st.selectbox("Pick a style of tone",['Conversational','Playful','Professional','Persuasive','Personalized','Storytelling',
-#                                             'Informative','Empathetic','Trustworthy','Experiential','Bold','Urgent','Grateful',
-#                                             'Nostalgic','FOMO (Fear of Missing Out)','Aspirational','Curious','Reassuring','Exclusive',
-#                                             'User-Generated Content (UGC)'])
-
 # Initialize OpenAI client
 client = OpenAI(api_key=st.secrets.key)
 
